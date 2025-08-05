@@ -1,0 +1,7 @@
+# IDE & Editors
+/.idea
+/.vscode
+.DS_Store
+Thumbs.db
+
+.env

@@ -1,0 +1,88 @@
+include docker/.env
+
+up:
+	docker compose -f docker-compose.yml up -d --build
+
+up-mysql:
+	docker compose -f docker-compose.yml -f docker-compose.mysql.yml up -d --build
+
+up-pgsql:
+	docker compose -f docker-compose.yml -f docker-compose.pgsql.yml up -d --build
+
+up-db:
+ifeq ($(strip $(DB_CONNECTION)),mysql)
+	make up-mysql
+else ifeq ($(strip $(DB_CONNECTION)),pgsql)
+	make up-pgsql
+else
+	$(error Unsupported DB_CONNECTION=$(DB_CONNECTION))
+endif
+
+down:
+	docker compose down
+
+restart: down up
+
+restart-mysql: down up-mysql
+
+restart-pgsql: down up-pgsql
+
+info:
+	@echo "🧾 Environment Info"
+	@echo "-------------------"
+	@echo "PROJECT_NAME: $(PROJECT_NAME)"
+	@echo "DB_CONNECTION: $(DB_CONNECTION)"
+	@echo "PHP_VERSION: $(PHP_VERSION)"
+	@echo "NODE_VERSION: $(NODE_VERSION)"
+	@echo "REDIS_VERSION: $(REDIS_VERSION)"
+	@echo "SUPERVISOR_ENABLE: $(ENABLE_SUPERVISOR)"
+	@echo "-------------------"
+
+switch-php:
+ifeq ($(strip $(version)),)
+	$(error Missing version. Usage: make switch-php version=8.3)
+endif
+	@echo "Switching to PHP $(version)"
+	sed -i 's/^PHP_VERSION=.*/PHP_VERSION=$(version)/' docker/.env
+	make restart
+
+logs:
+	docker compose logs -f --tail=100
+
+bash:
+	docker exec -it $$(docker ps -qf "name=${PROJECT_NAME}_php") bash
+
+composer-install:
+	docker exec -it $$(docker ps -qf "name=${PROJECT_NAME}_php") composer install
+
+composer-update:
+	docker exec -it $$(docker ps -qf "name=${PROJECT_NAME}_php") composer update
+
+composer-require:
+ifeq ($(strip $(package)),)
+	$(error Missing package. Usage: make composer-require package=vendor/package)
+endif
+	docker exec -it $$(docker ps -qf "name=${PROJECT_NAME}_php") composer require $(package)
+
+run-php-command:
+ifeq ($(strip $(command)),)
+	$(error Missing command. Usage: make run-command command=artisan migrate command=bin/console doctrine:database:create)
+endif
+	docker exec -it $$(docker ps -qf "name=${PROJECT_NAME}_php") php $(command)
+
+run-npm-command:
+ifeq ($(strip $(command)),)
+	$(error Missing command. Usage: make run-npm-command command=install command=run dev)
+endif
+	docker exec -it $$(docker ps -qf "name=${PROJECT_NAME}_node") npm $(command)
+
+enable-site:
+	ln -sf docker/nginx/sites-available/$(site) docker/nginx/sites-enabled/$(site)
+	docker compose restart nginx
+
+new-site:
+	@cp docker/nginx/sites-available/default.conf docker/nginx/sites-available/$(site).conf
+	make enable-site site=$(site)
+	@echo "✅ Created and enabled site: $(site)"
+
+.PHONY: up up-mysql up-pgsql up-db down restart restart-mysql restart-pgsql switch-php logs bash composer-install composer-update composer-require run-php-command run-npm-command enable-site new-site

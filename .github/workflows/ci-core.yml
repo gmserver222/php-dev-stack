@@ -1,0 +1,67 @@
+name: CI - Docker Core Validation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  environment-check:
+    name: 📊 Validate Docker Environment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 💾 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📂 Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 💾 Restore build cache
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-php-build-${{ hashFiles('docker/php/**/Dockerfile') }}
+          restore-keys: |
+            ${{ runner.os }}-php-build-
+
+      - name: Copy environment file
+        run: cp .env.example .env
+
+      - name: 🔍 Show Dockerfile being built
+        run: cat docker/php/$(grep PHP_VERSION .env | cut -d '=' -f2)/Dockerfile
+
+      - name: 💪 Build PHP image (from .env)
+        run: |
+          PHP_VERSION=$(grep PHP_VERSION .env | cut -d '=' -f2)
+          docker buildx create --use
+          docker buildx build \
+            --tag php-custom-test \
+            --file docker/php/$PHP_VERSION/Dockerfile \
+            --cache-from=type=local,src=/tmp/.buildx-cache \
+            --cache-to=type=local,dest=/tmp/.buildx-cache-new \
+            --load \
+            .
+
+      - name: 💾 Save new cache
+        if: always()
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+          
+      - name: 🕵️ Check entrypoint permissions
+        run: |
+          ls -l docker/php/entrypoint.sh
+
+      - name: 📄 Verify PHP version
+        run: |
+          docker run --rm --entrypoint php php-custom-test -v
+
+      - name: 🔖 Check Composer version
+        run: |
+          docker run --rm --entrypoint composer php-custom-test --version
+
+      - name: 📚 Check PHP extensions
+        run: |
+          docker run --rm --entrypoint php php-custom-test -m

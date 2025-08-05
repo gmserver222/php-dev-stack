@@ -1,6 +1,25 @@
 # 📦 PHP Dockerized Environment with Multi-Version, Multi-Framework & Virtual Host Support
 
-This repository provides a robust and flexible development setup for any PHP-based project (Laravel, Symfony, WordPress, etc.) using Docker, with full support for:
+<p>
+  <a href="https://github.com/ArielEspinoza07/php-dev-stack/actions">
+    <img src="https://github.com/ArielEspinoza07/php-dev-stack/actions/workflows/build-php.yml/badge.svg"  alt="Build - PHP images">
+  </a>
+  <a href="https://github.com/ArielEspinoza07/php-dev-stack/actions">
+    <img src="https://github.com/ArielEspinoza07/php-dev-stack/actions/workflows/ci-core.yml/badge.svg"  alt="CI - Core Validation">
+  </a>
+  <a href="https://github.com/ArielEspinoza07/php-dev-stack/actions">
+    <img src="https://github.com/ArielEspinoza07/php-dev-stack/actions/workflows/lint.yml/badge.svg"  alt="Lint - Dockerfile & Makefile">
+  </a>
+  <a href="https://github.com/ArielEspinoza07/php-dev-stack/actions">
+    <img src="https://github.com/ArielEspinoza07/php-dev-stack/actions/workflows/framework-tests.yml/badge.svg"  alt="Framework - Laravel / Symfony Test">
+  </a>
+  <a href="https://github.com/ArielEspinoza07/php-dev-stack/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License">
+  </a>
+</p>
+
+This repository provides a robust and flexible development setup for any PHP-based project (Laravel, Symfony, WordPress,
+etc.) using Docker, with full support for:
 
 - ✅ Multiple PHP versions (5.6, 7.4–8.3)
 - ✅ Virtual host management via `sites-available` / `sites-enabled`
@@ -52,7 +71,7 @@ PHP_VERSION=8.3
 ### 3. Set database engine:
 
 ```dotenv
-DB_CONNECTION=mysql  # or pgsql
+DB_CONNECTION=mysql# or pgsql
 ```
 
 ### 4. Enable a virtual host:
@@ -78,24 +97,25 @@ make up-db         # Auto-detects DB from .env
 
 ## ⚙️ Useful Makefile Commands
 
-| Command                           | Description                                  |
-|-----------------------------------|----------------------------------------------|
-| make up                           | Start default stack (nginx, php, redis)      |
-| make up-mysql                     | Start stack with MySQL                       |
-| make up-pgsql                     | Start stack with PostgreSQL                  |
-| make up-db                        | Detects DB from `.env` and runs accordingly  |
-| make down                         | Stop and remove containers                   |
-| make restart                      | Restart stack                                |
-| make switch-php version=8.2       | Change PHP version                           |
-| make logs                         | Tail container logs                          |
-| make bash                         | Open shell in PHP container                  |
-| make composer-install             | Run composer install                         |
-| make composer-update              | Run composer update                          |
-| make composer-require package=... | Install package via Composer                 |
-| make run-php-command command=...  | Run any PHP CLI command                      |
-| make run-npm-command command=...  | Run any npm command (install, run dev, etc.) |
-| make enable-site site=...         | Enable virtual host                          |
-| make new-site site=...            | Create + enable new virtual host             |
+| Command                                           | Description                                  |
+|---------------------------------------------------|----------------------------------------------|
+| make up                                           | Start default stack (nginx, php, redis)      |
+| make up-mysql                                     | Start stack with MySQL                       |
+| make up-pgsql                                     | Start stack with PostgreSQL                  |
+| make up-db                                        | Detects DB from `.env` and runs accordingly  |
+| make down                                         | Stop and remove containers                   |
+| make restart                                      | Restart stack                                |
+| make switch-php version=8.2                       | Change PHP version                           |
+| make logs                                         | Tail container logs                          |
+| make bash                                         | Open shell in PHP container                  |
+| make composer-create-project project=... name=... | Run composer install                         |
+| make composer-install project=...                 | Run composer install                         |
+| make composer-update  project=...                 | Run composer update                          |
+| make composer-require project=... package=...     | Install package via Composer                 |
+| make run-php-command  project=... command=...     | Run any PHP CLI command                      |
+| make run-npm-command  project=... command=...     | Run any npm command (install, run dev, etc.) |
+| make enable-site site=...                         | Enable virtual host                          |
+| make new-site site=...                            | Create + enable new virtual host             |
 
 ---
 
@@ -139,7 +159,7 @@ For full compatibility, WSL2 is strongly recommended.
 ## 🧪 PHP Version Support
 
 | Version | Composer | Xdebug | Notes                        |
-| ------- | -------- | ------ | ---------------------------- |
+|---------|----------|--------|------------------------------|
 | 5.6     | ❌        | ❌      | Legacy, limited              |
 | 7.4     | ✅        | ✅      | Stable, supported            |
 | 8.0+    | ✅        | ✅      | Recommended for new projects |

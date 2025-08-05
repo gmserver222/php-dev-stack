@@ -1,4 +1,11 @@
-include docker/.env
+include .env
+
+all: up-db
+
+clean: down
+
+test:
+	@echo "No test suite defined yet"
 
 up:
 	docker compose -f docker-compose.yml up -d --build
@@ -28,14 +35,10 @@ restart-mysql: down up-mysql
 restart-pgsql: down up-pgsql
 
 info:
-	@echo "🧾 Environment Info"
+	@echo "🧾 Environment Info: $(PROJECT_NAME)"
 	@echo "-------------------"
-	@echo "PROJECT_NAME: $(PROJECT_NAME)"
 	@echo "DB_CONNECTION: $(DB_CONNECTION)"
 	@echo "PHP_VERSION: $(PHP_VERSION)"
-	@echo "NODE_VERSION: $(NODE_VERSION)"
-	@echo "REDIS_VERSION: $(REDIS_VERSION)"
-	@echo "SUPERVISOR_ENABLE: $(ENABLE_SUPERVISOR)"
 	@echo "-------------------"
 
 switch-php:
@@ -43,7 +46,7 @@ ifeq ($(strip $(version)),)
 	$(error Missing version. Usage: make switch-php version=8.3)
 endif
 	@echo "Switching to PHP $(version)"
-	sed -i 's/^PHP_VERSION=.*/PHP_VERSION=$(version)/' docker/.env
+	sed -i 's/^PHP_VERSION=.*/PHP_VERSION=$(version)/' .env
 	make restart
 
 logs:
@@ -53,28 +56,53 @@ bash:
 	docker exec -it $$(docker ps -qf "name=${PROJECT_NAME}_php") bash
 
 composer-install:
-	docker exec -it $$(docker ps -qf "name=${PROJECT_NAME}_php") composer install
+ifeq ($(strip $(project)),)
+	$(error Missing path. Usage: make composer-install project=myapp)
+endif
+	docker exec -i $$(docker ps -qf "name=${PROJECT_NAME}_php")  sh -c "cd /var/www/html/$(project) && composer install"
+
+composer-create-project:
+ifeq ($(strip $(project)),)
+	$(error Missing project. Usage: make composer-create-project name=laravel-test project=laravel/laravel)
+endif
+ifeq ($(strip $(name)),)
+	$(error Missing path. Usage: make composer-create-project name=laravel-test project=laravel/laravel)
+endif
+	docker exec -i $$(docker ps -qf "name=${PROJECT_NAME}_php") sh -c "cd /var/www/html && composer create-project $(project) $(name)"
+
 
 composer-update:
-	docker exec -it $$(docker ps -qf "name=${PROJECT_NAME}_php") composer update
+ifeq ($(strip $(project)),)
+	$(error Missing path. Usage: make composer-update project=myapp)
+endif
+	docker exec -i $$(docker ps -qf "name=${PROJECT_NAME}_php")  sh -c "cd /var/www/html/$(project) && composer update"
 
 composer-require:
 ifeq ($(strip $(package)),)
-	$(error Missing package. Usage: make composer-require package=vendor/package)
+	$(error Missing package. Usage: make composer-require path=myapp package=vendor/package)
 endif
-	docker exec -it $$(docker ps -qf "name=${PROJECT_NAME}_php") composer require $(package)
+ifeq ($(strip $(project)),)
+	$(error Missing path. Usage: make composer-require project=myapp package=vendor/package)
+endif
+	docker exec -i $$(docker ps -qf "name=${PROJECT_NAME}_php")  sh -c "cd /var/www/html/$(project) && composer require $(command)"
 
 run-php-command:
 ifeq ($(strip $(command)),)
-	$(error Missing command. Usage: make run-command command=artisan migrate command=bin/console doctrine:database:create)
+	$(error Missing command. Usage: make run-php-command project=myapp command="artisan migrate")
 endif
-	docker exec -it $$(docker ps -qf "name=${PROJECT_NAME}_php") php $(command)
+ifeq ($(strip $(project)),)
+	$(error Missing path. Usage: make run-php-command project=myapp command="artisan migrate")
+endif
+	docker exec -i $$(docker ps -qf "name=${PROJECT_NAME}_php") sh -c "cd /var/www/html/$(project) && php $(command)"
 
 run-npm-command:
 ifeq ($(strip $(command)),)
-	$(error Missing command. Usage: make run-npm-command command=install command=run dev)
+	$(error Missing command. Usage: make run-npm-command project=myapp command="run dev")
 endif
-	docker exec -it $$(docker ps -qf "name=${PROJECT_NAME}_node") npm $(command)
+ifeq ($(strip $(project)),)
+	$(error Missing path. Usage: make run-npm-command project=myapp command="run dev")
+endif
+	docker exec -i $$(docker ps -qf "name=${PROJECT_NAME}_node") sh -c "cd /var/www/html/$(project) && npm $(command)"
 
 enable-site:
 	ln -sf docker/nginx/sites-available/$(site) docker/nginx/sites-enabled/$(site)
@@ -85,4 +113,4 @@ new-site:
 	make enable-site site=$(site)
 	@echo "✅ Created and enabled site: $(site)"
 
-.PHONY: up up-mysql up-pgsql up-db down restart restart-mysql restart-pgsql switch-php logs bash composer-install composer-update composer-require run-php-command run-npm-command enable-site new-site
+.PHONY: all clean test up up-mysql up-pgsql up-db down restart restart-mysql restart-pgsql switch-php logs bash composer-create-project composer-install composer-update composer-require run-php-command run-npm-command enable-site new-site

